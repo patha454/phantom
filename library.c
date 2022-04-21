@@ -1,7 +1,8 @@
 #include "library.h"
-#include <stdlib.h>
+
+extern void sys_exit_group(int status);
 
 void main(void)
 {
-    exit(69);
+    sys_exit_group(69);
 }
