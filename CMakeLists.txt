@@ -6,6 +6,7 @@ CMAKE_POLICY(SET CMP0083 NEW)   # Manage PIE/PIC link settings.
 SET(PHANTOM_PROJECT "phantom_project")
 SET(PHANTOM_BINARY "phantom")
 SET(CMAKE_C_STANDARD 23)
+SET(C_STANDARD_REQUIRED  ON)
 SET(PHANTOM_MAJOR_VERSION "0" CACHE STRING "Major version of this Phantom build")
 SET(PHANTOM_MINOR_VERSION "0" CACHE STRING "Minor version of this Phantom build")
 SET(PHANTOM_PATCH_VERSION "0" CACHE STRING "Patch version of this Phantom build")
@@ -24,5 +25,32 @@ PROJECT(
 MESSAGE(STATUS "Target CPU: ${CMAKE_SYSTEM_PROCESSOR}")
 MESSAGE(STATUS "Target OS: ${CMAKE_SYSTEM_NAME}")
 
+# Compile the provided target as a statically-linked position independent executable.
+FUNCTION(MAKE_FREESTANDING_STATIC_PIE TARGET)
+    # Set linker options.
+    IF (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        TARGET_LINK_OPTIONS(${PHANTOM_BINARY} PRIVATE
+                "LINKER:--entry,start"
+                "-nostdlib"
+                "-ffreestanding"
+                "-static-pie"
+                )
+    ELSE()
+        MESSAGE(FATAL_ERROR "Phantom: Unsupported target OS (`${CMAKE_SYSTEM_NAME}`)")
+    ENDIF()
+    # Set compiler options
+    IF (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        TARGET_COMPILE_OPTIONS(${PHANTOM_BINARY} PUBLIC
+                "-nostartfiles"
+                "-nodefaultlibs"
+                "-ffreestanding"
+                "-static-pie"
+                )
+    ELSE()
+        MESSAGE(FATAL_ERROR "Phantom: Unsupported C Compiler (`${CMAKE_C_COMPILER_ID}`)")
+    ENDIF()
+ENDFUNCTION()
+
+# Configure the Phantom RTDL binary.
 ADD_EXECUTABLE(${PHANTOM_BINARY} library.c linux_x64.s)
-# TARGET_LINK_OPTIONS(${PHANTOM_BINARY} PRIVATE LINKER:-e start)
+MAKE_FREESTANDING_STATIC_PIE(${PHANTOM_BINARY})

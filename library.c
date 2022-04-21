@@ -2,7 +2,7 @@
 
 extern void sys_exit_group(int status);
 
-void main(void)
+void start(void)
 {
     sys_exit_group(69);
 }
