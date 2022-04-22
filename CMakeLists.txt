@@ -32,8 +32,10 @@ FUNCTION(MAKE_FREESTANDING_STATIC_PIE TARGET)
         TARGET_LINK_OPTIONS(${PHANTOM_BINARY} PRIVATE
                 "LINKER:--entry,start"
                 "-nostdlib"
+                "-nodefaultlibs"
                 "-ffreestanding"
                 "-static-pie"
+                "-fpie"
                 )
     ELSE()
         MESSAGE(FATAL_ERROR "Phantom: Unsupported target OS (`${CMAKE_SYSTEM_NAME}`)")
