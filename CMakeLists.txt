@@ -45,6 +45,7 @@ FUNCTION(MAKE_FREESTANDING_STATIC_PIE TARGET)
                 "-nodefaultlibs"
                 "-ffreestanding"
                 "-static-pie"
+                "-fpie"
                 )
     ELSE()
         MESSAGE(FATAL_ERROR "Phantom: Unsupported C Compiler (`${CMAKE_C_COMPILER_ID}`)")
