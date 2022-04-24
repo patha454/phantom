@@ -54,6 +54,18 @@ FUNCTION(MAKE_FREESTANDING_STATIC_PIE TARGET)
     ENDIF()
 ENDFUNCTION()
 
+INCLUDE(FetchContent)
+FetchContent_Declare(printf_library
+        GIT_REPOSITORY https://github.com/eyalroz/printf.git
+        GIT_TAG 8b831c12307af16ed0d64320f370b8350ee34b60 # v6.0.0
+        )
+# Build `printf_library` as a static library.
+SET(BUILD_STATIC_LIBRARY ON)
+SET(ALIAS_STANDARD_FUNCTION_NAMES OFF)
+FetchContent_MakeAvailable(printf_library)
+TARGET_COMPILE_OPTIONS(printf PRIVATE "-fPIE")
+
 # Configure the Phantom RTDL binary.
 ADD_EXECUTABLE(${PHANTOM_BINARY} library.c linux_x64.s)
 MAKE_FREESTANDING_STATIC_PIE(${PHANTOM_BINARY})
+TARGET_LINK_LIBRARIES(${PHANTOM_BINARY} PRIVATE printf)
