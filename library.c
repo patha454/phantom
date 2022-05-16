@@ -1,4 +1,3 @@
-#include "library.h"
 #include "printf/printf.h"
 #include <stdnoreturn.h>
 
@@ -10,9 +9,12 @@ extern void putchar_(char c)
     sys_write(1, &c, 1);
 }
 
-noreturn void start(void)
+noreturn void main(void* stackPointer)
 {
-    printf_("Hello, world! %p", &start);
-    sys_write(1, "Test", 4);
+    long* argc = (long*) stackPointer;
+    printf_("sp: %p\n", argc);
+    printf_("&argc: %p\n", argc + 6);
+    printf_("Argc: %d\n", *(argc + 6));
+    sys_write(1, "Test\n", 5);
     sys_exit_group(69);
 }

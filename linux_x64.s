@@ -1,5 +1,11 @@
 .text
 
+.global start2
+
+.global start
+start:
+    movq %rsp, %rdi         # Move stack pointer to arg1.
+    jmp start2              # Call main(stack_pointer);
 
 .hidden sys_write
 .global sys_write
