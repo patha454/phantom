@@ -9,12 +9,34 @@ extern void putchar_(char c)
     sys_write(1, &c, 1);
 }
 
+void print_arguments(long argc, char** argv)
+{
+    for (int i = 0; i < argc; i++)
+    {
+        printf_("%s\n", argv[i]);
+    }
+}
+
+void print_process_state(void* stackBase)
+{
+    long* argc = (long*) stackBase;
+    char** argv = (char**) (stackBase + sizeof(long*));
+    print_arguments(*argc, argv);
+    char** env = stackBase + 16 + 8 * *argc;
+    if (env - 1 != 0)
+    {
+        printf_("fuck\n");
+    }
+    while (env != 0 && *env != NULL)
+    {
+        printf_("%s\n", *env);
+        env += 1;
+    }
+}
+
+
 noreturn void main(void* stackPointer)
 {
-    long* argc = (long*) stackPointer;
-    printf_("sp: %p\n", argc);
-    printf_("&argc: %p\n", argc + 0);
-    printf_("Argc: %d\n", *(argc + 0));
-    sys_write(1, "Test\n", 5);
+    print_process_state(stackPointer);
     sys_exit_group(69);
 }
