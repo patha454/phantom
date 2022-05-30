@@ -6,6 +6,9 @@
  *
  * Functions declared in `system.h` need to be implemented for each host
  * Phantom targets. Hosts would usually be an operating system kernel.
+ *
+ * @author H Paterson
+ * @copyright BSL-1.0
  */
 #ifndef PHANTOM_PROJECT_SYSTEM_H
 #define PHANTOM_PROJECT_SYSTEM_H

@@ -66,6 +66,6 @@ FetchContent_MakeAvailable(printf_library)
 TARGET_COMPILE_OPTIONS(printf PRIVATE "-fPIE")
 
 # Configure the Phantom RTDL binary.
-ADD_EXECUTABLE(${PHANTOM_BINARY} library.c linux_x64.s allocator.h system.h system_linux.c system_linux.h)
+ADD_EXECUTABLE(${PHANTOM_BINARY} library.c linux_x64.s allocator.h system.h system_linux.c system_linux.h status.h status.c)
 MAKE_FREESTANDING_STATIC_PIE(${PHANTOM_BINARY})
 TARGET_LINK_LIBRARIES(${PHANTOM_BINARY} PRIVATE printf)
