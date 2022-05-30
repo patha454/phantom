@@ -3,6 +3,8 @@
  *
  * `status.c` implements functions related to the `PhStatus` type, such as
  * getting a human readable string representing a status code.
+ *
+ * @see status.h for detailed documentation.
 */
 
 #include "status.h"
@@ -27,10 +29,46 @@ struct StatusStrings
     const char* const description;
 };
 
-const struct StatusStrings unknownStatus = {UNKNOWN_STATUS_NAME, UNKNOWN_STATUS_DESCRIPTION};
+/**
+ * Look up the human readable strings describing a status.
+ *
+ * @param status Status code to look up.
+ * @return A set of strings describing the \p status.
+ */
+const struct StatusStrings statusString(PhStatus status)
+{
+    switch (status)
+    {
+        case PH_SUCCESS:
+        {
+            const struct StatusStrings result = { PH_SUCCESS_NAME, PH_SUCCESS_DESCRIPTION};
+            return result;
+        }
+        case PH_GENERIC_ERROR:
+        {
+            const struct StatusStrings result = {PH_GENERIC_ERROR_NAME, PH_GENERIC_ERROR_DESCRIPTION};
+            return result;
+        }
+        case PH_PANIC:
+        {
+            const struct StatusStrings result = { PH_PANIC_NAME, PH_PANIC_DESCRIPTION};
+            return result;
 
-const struct StatusStrings statusStringMap[] = {
-    [PH_SUCCESS] = { PH_SUCCESS_NAME, PH_SUCCESS_DESCRIPTION },
-    [PH_GENERIC_ERROR] = { PH_GENERIC_ERROR_NAME, PH_GENERIC_ERROR_DESCRIPTION },
-    [PH_PANIC] = { PH_PANIC_NAME, PH_PANIC_DESCRIPTION }
-};
+        }
+        default:
+        {
+            const struct StatusStrings result = { UNKNOWN_STATUS_NAME, UNKNOWN_STATUS_DESCRIPTION };
+            return result;
+        }
+    }
+}
+
+[[nodiscard]] const char* const phStatusName(const PhStatus status)
+{
+    return statusString(status).name;
+}
+
+[[nodiscard]] const char* const phStatusDescription(const PhStatus status)
+{
+    return statusString(status).description;
+}

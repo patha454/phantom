@@ -22,7 +22,7 @@
  *
  * @param file Handle to an open file to be written to.
  * @param buffer Date to write to the \p file.
- * @param length Bytes to be written from the /p buffer to the /p file.
+ * @param length Bytes to be written from the /p buffer to the \p file.
  */
 void phWrite(int file, uint8_t* buffer, size_t length);
 
