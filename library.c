@@ -23,7 +23,7 @@ void print_process_state(void* stackBase)
     char** argv = (char**) (stackBase + sizeof(long*));
     print_arguments(*argc, argv);
     char** env = stackBase + 16 + 8 * *argc;
-    if (env - 1 != 0)
+    if (*(env - 1)!= 0)
     {
         printf_("fuck\n");
     }
@@ -33,7 +33,6 @@ void print_process_state(void* stackBase)
         env += 1;
     }
 }
-
 
 noreturn void main(void* stackPointer)
 {
