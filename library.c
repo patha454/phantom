@@ -1,12 +1,10 @@
 #include "printf/printf.h"
+#include "system.h"
 #include <stdnoreturn.h>
-
-extern noreturn void sys_exit_group(int status);
-extern long sys_write(int fd, void* buf, unsigned long count);
 
 extern void putchar_(char c)
 {
-    sys_write(1, &c, 1);
+    phWrite(1, &c, 1);
 }
 
 void print_arguments(long argc, char** argv)
@@ -34,8 +32,8 @@ void print_process_state(void* stackBase)
     }
 }
 
-noreturn void main(void* stackPointer)
+noreturn main(void* stackPointer)
 {
     print_process_state(stackPointer);
-    sys_exit_group(69);
+    phTerminate(69);
 }
