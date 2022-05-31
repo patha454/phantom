@@ -32,6 +32,6 @@ void phWrite(int file, uint8_t* buffer, size_t length);
  *
  * @param status Exit status code to return to the system.
  */
-noreturn void phTerminate(int status);
+[[noreturn]] void phTerminate(int status);
 
 #endif //PHANTOM_PROJECT_SYSTEM_H

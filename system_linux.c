@@ -18,7 +18,7 @@ void phWrite(int file, uint8_t* buffer, size_t length)
     sys_write(file, buffer, length);
 }
 
-noreturn void phTerminate(int status)
+[[noreturn]] void phTerminate(int status)
 {
     sys_exit_group(status);
 }

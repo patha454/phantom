@@ -1,7 +1,6 @@
 #include "printf/printf.h"
 #include "system.h"
 #include "status.h"
-#include <stdnoreturn.h>
 
 extern void putchar_(char c)
 {
@@ -33,7 +32,7 @@ void print_process_state(void* stackBase)
     }
 }
 
-noreturn main(void* stackPointer)
+[[noreturn]] void main(void* stackPointer)
 {
     print_process_state(stackPointer);
     printf_("%s %s\n", phStatusName(PH_SUCCESS), phStatusDescription(PH_SUCCESS));

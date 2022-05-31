@@ -28,6 +28,6 @@ extern void sys_write(int file, void* buffer, unsigned int length);
  *
  * @param status Exit status code to return to the kernel.
  */
-extern noreturn sys_exit_group(int status);
+extern noreturn void sys_exit_group(int status);
 
 #endif //PHANTOM_PROJECT_SYSTEM_LINUX_H
