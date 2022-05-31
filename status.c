@@ -53,7 +53,6 @@ const struct StatusStrings statusString(PhStatus status)
         {
             const struct StatusStrings result = { PH_PANIC_NAME, PH_PANIC_DESCRIPTION};
             return result;
-
         }
         default:
         {
